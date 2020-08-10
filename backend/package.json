@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "frontend": "npm start --prefix ../frontend",
+    "dev": "concurrently \"npm run start\" \"npm run frontend\""
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/bigbohne/web-starter-pack/issues"
   },
-  "homepage": "https://github.com/bigbohne/web-starter-pack#readme"
+  "homepage": "https://github.com/bigbohne/web-starter-pack#readme",
+  "devDependencies": {
+    "concurrently": "^5.3.0"
+  }
 }
