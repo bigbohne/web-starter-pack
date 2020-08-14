@@ -1,37 +1,55 @@
 import React, {Component} from 'react';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
-import { Grid, Progress, Statistic } from 'semantic-ui-react'
+import { Grid, Button, Statistic } from 'semantic-ui-react'
 
 class App extends Component {
-  state = {}
+  state = {"counter" : "N/A"}
+
 
   componentDidMount() {
-    this.callApi()
-      .then(res => this.setState(res))
-      .catch(err => console.log(err));
+    this.update();
   }
 
-  callApi = async () => {
-    const response = await fetch('/api/hello');
+  callApi = async (url) => {
+    const response = await fetch(url);
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     
     return body;
   };
 
+  update = () => {
+    this.callApi('/api/value')
+      .then(res => this.setState(res))
+      .catch(err => console.log(err));
+  }
+
+  up = () => {
+    this.callApi('/api/up')
+      .then(this.update());
+  }
+
+  down = () => {
+    this.callApi('/api/down')
+      .then(this.update());
+  }
+
   render() { return (
     <div className="App">
-	<Grid columns={2} divided>
+	<Grid divided>
 	  <Grid.Row verticalAlign="middle">
-  	    <Grid.Column width="13">
-  	      <Progress percent="75" indicating />
+  	    <Grid.Column width="3">
+  	      <Button onClick={this.up}>Up!</Button>
 	    </Grid.Column>
-	    <Grid.Column width="3">
+	    <Grid.Column width="10">
 	      <Statistic>
-	        <Statistic.Value>1337</Statistic.Value>
+	        <Statistic.Value>{this.state.counter}</Statistic.Value>
 	        <Statistic.Label>Geilo</Statistic.Label>	 
 	      </Statistic>
+	    </Grid.Column>
+  	    <Grid.Column width="3">
+  	      <Button onClick={this.down}>Down!</Button>
 	    </Grid.Column>
 	  </Grid.Row>
 	</Grid>
