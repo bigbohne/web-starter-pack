@@ -9,13 +9,13 @@ class App extends Component {
 
 
   componentDidMount() {
-    this.socket = socketIOClient();
-    this.socket.on('message', this.update);
+    var socket = socketIOClient();
+    socket.on("News", this.update);
   }
 
   callApi = async (url) => {
     const response = await fetch(url);
-    const body = await response.json();
+    const body = await response.text();
     if (response.status !== 200) throw Error(body.message);
     
     return body;
