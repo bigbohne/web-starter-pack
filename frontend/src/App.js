@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css'
 import { Grid, Button, Statistic } from 'semantic-ui-react'
+import socketIOClient from 'socket.io-client'
 
 class App extends Component {
   state = {"counter" : "N/A"}
 
 
   componentDidMount() {
-    this.update();
+    this.socket = socketIOClient();
+    this.socket.on('message', this.update);
   }
 
   callApi = async (url) => {
@@ -19,20 +21,16 @@ class App extends Component {
     return body;
   };
 
-  update = () => {
-    this.callApi('/api/value')
-      .then(res => this.setState(res))
-      .catch(err => console.log(err));
+  update = (state) => {
+    this.setState(state);
   }
 
   up = () => {
     this.callApi('/api/up')
-      .then(this.update());
   }
 
   down = () => {
     this.callApi('/api/down')
-      .then(this.update());
   }
 
   render() { return (
@@ -45,7 +43,7 @@ class App extends Component {
 	    <Grid.Column width="10">
 	      <Statistic>
 	        <Statistic.Value>{this.state.counter}</Statistic.Value>
-	        <Statistic.Label>Geilo</Statistic.Label>	 
+	        <Statistic.Label>Z&auml;hler</Statistic.Label>
 	      </Statistic>
 	    </Grid.Column>
   	    <Grid.Column width="3">
