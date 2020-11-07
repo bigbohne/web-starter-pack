@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "frontend": "npm start --prefix ../frontend",
     "dev": "concurrently \"npm run start\" \"npm run frontend\""
   },
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/bigbohne/web-starter-pack#readme",
   "devDependencies": {
-    "concurrently": "^5.3.0"
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
   }
 }
