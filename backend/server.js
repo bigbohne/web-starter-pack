@@ -4,23 +4,29 @@ const path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-// The sate of the application
+// The sate of the application.
 var counter = 0;
 
 io.on('connection', function(socket) {
-  socket.join("news")
-  socket.emit("News", {"counter" : counter});
+  socket = socket.join("counter")
+
+  // Send initial state to client.
+  socket.emit("counter", {"counter" : counter});
 });
+
+function updateClients() {
+  io.emit("counter", {"counter" : counter});
+}
 
 app.get('/api/up', function (req, res) {
   counter = counter + 1
-  io.to('news').emit("News", {"counter" : counter});
+  updateClients();
   res.end();
 })
  
 app.get('/api/down', function (req, res) {
   counter = counter - 1
-  io.to('news').emit("News", {"counter" : counter});
+  updateClients();
   res.end();
 })
 
