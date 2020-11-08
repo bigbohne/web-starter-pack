@@ -35,18 +35,18 @@ class App extends Component {
 
   render() { return (
     <div className="App">
-      <Grid divided>
+      <Grid columns="3">
         <Grid.Row verticalAlign="middle">
-            <Grid.Column width="3">
+            <Grid.Column>
               <Button onClick={this.up} primary>Up!</Button>
           </Grid.Column>
-          <Grid.Column width="10">
+          <Grid.Column>
             <Statistic>
               <Statistic.Value>{this.state.counter}</Statistic.Value>
               <Statistic.Label>Number</Statistic.Label>
             </Statistic>
           </Grid.Column>
-            <Grid.Column width="3">
+            <Grid.Column>
               <Button onClick={this.down} disabled={this.state.counter <= 0}>Down!</Button>
           </Grid.Column>
         </Grid.Row>
